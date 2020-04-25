@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="INDEX, FOLLOW" />
+    <meta name="keywords" content="daemonfreaks, jun-g, RoadBike, FreeBSD, Python, PyBlosxom" />
+    <meta name="description" content="daemonfreaks.com" />
+    <meta name="verify-v1" content="czG9FwMyJ9t5m4toJx5eJQw566Ed7/JLdik/h7Sttew=" />
+
+    <title>daemonfreaks.com</title>
+
+    <script type="text/javascript"><!--
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-178197-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+      //-->
+    </script>
+
+    <link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.daemonfreaks.css" />
+
+  </head>
+  <body>
+
+    <header class="container-fluid">
+      <h1 class="h2">daemonfreaks.com</h1>
+    </header>
+
+    <nav class="navbar">
+      <div class="contaier-fluid">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="blog/">Blog</a></li>
+          <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bicycle<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="result.html">Race Results</a></li>
+              <li><a href="http://cyclett.dip.jp/cycleTT/UserData?PATNER_ID=jun-g" target="_blank">関西ヒルクライムTT</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="container-fluid">
+      <h2 class="h3">Recent Activities</h2>
+      <ul id="feed"></ul>
+    </section>
+
+    <footer class="container-fluid">
+      <p>Copyright (c) 2003-2018 jun-g at daemonfreaks.com. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.feeds.min.js"></script>
+    <script type="text/javascript"><!--
+
+        $('#feed').feeds({
+            // サイト名: URL
+            feeds: {
+                "Strava":         "http://feedmyride.net/rides/1992209",
+                "Flickr":         "https://api.flickr.com/services/feeds/photos_public.gne?id=47144672@N00",
+                "Booklog":        "http://booklog.jp/users/daemonfreaks/feed",
+                "Bitbucket":      "https://bitbucket.org/daemonfreaks/rss/feed?token=a83d92984b491f5b8c09c3cc97d1058a",
+                "Tumblr":         "http://daemonfreaks.tumblr.com/rss",
+                "GitHub":         "https://github.com/daemonfreaks.atom",
+                "Foursquare":     "https://feeds.foursquare.com/history/4ZHIXA5ZMA112RA3YN5X101JWS22QF3V.rss",
+                "Libre.fm":       "http://alpha.libre.fm/rdf.php?fmt=rss&page=/user/daemonfreaks/recent-tracks",
+                //"Hatena::Diary": "http://d.hatena.ne.jp/daemonfreaks/rss2",
+                //"Delicious":      "http://feeds.delicious.com/v2/rss/daemonfreaks",
+                //"FriendFeed":     "http://friendfeed.com/daemonfreaks?format=atom",
+                //"PhotoZou":       "http://photozou.jp/feed/user/117347.xml",
+                //"Instagram":      "http://rss.stagram.tk/feed.php?id=1390609551&username=daemonfreaks&rss"
+                //"Last.fm":        "http://ws.audioscrobbler.com/1.0/user/jun-g/recenttracks.rss",
+            },
+
+            // 各フィードから取得する件数
+            max: 1,
+
+            // 前処理
+            preprocess: function (feed) {
+                
+                // 日付をyyyy/mm/dd hh:mi:ssに直す
+                var date = new Date(this.publishedDate);
+                var delems = [date.getFullYear(),
+                              ('0' + (date.getMonth() + 1)).slice(-2),
+                              ('0' + date.getDate()).slice(-2)];
+                var telems = [('0' + date.getHours()).slice(-2),
+                              ('0' + date.getMinutes()).slice(-2)];
+                this.publishedDate = delems.join('/') + ' ' + telems.join(':');
+
+                // Stravaの場合feedLinkを直す
+                if (this.source == 'Strava') {
+                    this.feedLink = 'http://www.strava.com/athletes/1992209';
+                }
+
+            },
+
+            // 読み込み中
+            loadingTemplate: '<li>読み込み中...</li>',
+
+            // 出力
+            entryTemplate: 'feedTemplate'
+
+        });
+    //--></script>
+    <script type="text/html" id="feedTemplate">
+        <li>
+          <a href="<!=feedLink!>" target="_blank"><!=source!></a> - <a href="<!=link!>" target="_blank"><!=title!></a>
+          <span style="font-size:x-small;">[<!=publishedDate!>]</span>
+        </li>
+    </script>
+
+    <script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

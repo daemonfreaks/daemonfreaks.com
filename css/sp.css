@@ -1,0 +1,93 @@
+body, header, footer, article, nav {
+  margin :0;
+  padding :0;
+  border :0;
+  outline :0;
+  font-size :100%;
+  vertical-align :baseline;
+  background: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+header, footer, article, nav {
+  display: block;
+}
+
+#header {
+  background-color: black;
+  border-bottom: 2px solid gray;
+}
+
+#header h1 {
+  margin :0;
+  padding :2px;
+}
+
+#header a {
+  color: white;
+  text-decoration: none;
+}
+
+#header a:hover {
+  color: red;
+}
+
+img {
+  zoom: 40%;
+}
+
+article {
+  margin: 5px;
+  padding: 5px;
+  margin-bottom: 1em;
+  border: 1px solid gray;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+article header h1{
+  margin: 0px;
+  padding: 0px;
+  border-bottom: 1px solid gray;
+  font-size: 1.5em;
+}
+
+article header p {
+  margin: 0px;
+  padding: 0px;
+  text-align: right;
+  font-size: 80%;
+}
+
+article pre {
+  border: 2px dotted #ddddff;
+  font-family: monospace;
+  padding: 5px;
+  background-color: #eeeeff;
+  width: 97%;
+  overflow: auto;
+}
+
+article footer p {
+  margin: 0px;
+  padding: 0px;
+  text-align: left;
+  font-size: 80%;
+}
+
+#footer {
+  background-color: black;
+  border-top: 2px solid gray;
+  color: white;
+  text-align: center;
+}
+
+#footer nav .five { font-size: 125%; }
+#footer nav .ten {font-size: 150%; }
+#footer nav .twenty {font-size: 200%; }
+
+
+#footer .copyright {
+  font-size: 80%;
+}

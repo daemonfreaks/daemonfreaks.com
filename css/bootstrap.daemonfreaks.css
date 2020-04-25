@@ -1,0 +1,75 @@
+header.container-fluid {
+    background-color: #000;
+}
+
+header > h1.h2 {
+    color: #fff;
+}
+
+section.container-fluid {
+    margin-bottom: 1em;
+}
+
+footer.container-fluid {
+    border-top: 2px solid #bbb;
+}
+
+.navbar {
+    border-radius: 0px;
+    background-color: #bbb;
+    border: 0px solid #000;
+    min-height: 1em;
+}
+
+.navbar-nav {
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar-nav > li.active {
+    background-color: #fff;
+}
+
+.navbar-nav > li.active > a {
+    color: #000;
+}
+
+.nav.open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background-color: #fff;
+}
+
+.navbar-nav > li > a {
+    padding: 5px;
+}
+
+.navbar-nav > li > a:focus, .navbar-nav > li > a:hover {
+    background-color: #fff;
+}
+
+.dropdown-menu {
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid #bbb;
+    background-color: #bbb;
+}
+
+.dropdown-menu > li > a {
+    padding: 5px;
+    background-color: #bbb;
+}
+
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.dropdown-menu > li.active > a {
+    background-color: #fff;
+    color: #000;
+}
+
+.dropdown-menu > li.active > a:focus, .dropdown-menu > li.active > a:hover {
+    background-color: #fff;
+    color: #000;
+}
+
