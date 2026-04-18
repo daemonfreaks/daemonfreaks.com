@@ -10,6 +10,10 @@ section.container-fluid {
     margin-bottom: 1em;
 }
 
+.results-section {
+    margin-bottom: 1.5rem;
+}
+
 footer.container-fluid {
     border-top: 2px solid #bbb;
 }
