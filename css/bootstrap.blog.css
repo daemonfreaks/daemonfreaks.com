@@ -15,6 +15,7 @@ article h4 {
 }
 
 article h5 {
+    //border-left: 5px solid #bbb;
     border-bottom: 1px solid #bbb;
     margin-top: 1em;
 }
@@ -182,6 +183,20 @@ fieldset {
 
 #tagcloud > a.twenty {
     font-size: 3em;
+}
+
+/********************
+ facebook buton
+********************/
+
+.fb-like > span {
+    width: 110px !important;
+    height: 20px !important;
+}
+
+.fb-like > iframe {
+    width: 100px !important;
+    height: 20px !important;
 }
 
 /********************
