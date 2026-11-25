@@ -2,33 +2,125 @@
  entry
 ********************/
 
-article {
-    border: 2px solid #bbb;
-    margin-bottom: 15px;
-    padding: 10px;
-    overflow: auto;
+/*
+ * 本文の読みやすさの目安:
+ *   文字 16px / 行間 1.75（スマホは 1.7）/ 1行 40字前後 / 段落間 1em
+ * 1行の字数は、記事枠の幅（.container の幅と article の左右余白）で調整している。
+ */
+
+/* PC幅では本文が1行60字近くになるので、全体の幅を広げすぎない（1行およそ41字） */
+@media (min-width: 1200px) {
+    .container {
+        width: 1040px;
+    }
 }
 
+/* 1カラム表示のときは、カラムの左右余白を外して本文の幅を確保する */
+@media (max-width: 991px) {
+    .col-md-9,
+    .col-md-3 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+article {
+    border: 2px solid #bbb;
+    margin-bottom: 24px;
+    padding: 20px 30px;
+    overflow: auto;
+    letter-spacing: 0.02em;
+    overflow-wrap: break-word;
+}
+
+article h4,
+article h5 {
+    font-weight: bold;
+}
+
+/* 見出しは上を広く・下を狭くして、続く本文とのまとまりを見せる */
 article h4 {
     border-bottom: 2px dotted #bbb;
-    margin-top: 1.5em;
+    margin: 2em 0 0.7em;
+    padding-bottom: 0.2em;
+    font-size: 20px;
 }
 
 article h5 {
-    //border-left: 5px solid #bbb;
     border-bottom: 1px solid #bbb;
-    margin-top: 1em;
+    margin: 1.6em 0 0.6em;
+    padding-bottom: 0.15em;
+    font-size: 17px;
+}
+
+article li + li {
+    margin-top: 0.3em;
+}
+
+article dd {
+    margin-bottom: 0.6em;
+    margin-left: 1.5em;
+}
+
+/* 文中のコード片（reST の ``literal``） */
+article tt {
+    padding: 0.1em 0.3em;
+    font-size: 0.9em;
+    letter-spacing: 0;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+}
+
+article pre {
+    letter-spacing: 0;
+}
+
+article img {
+    max-width: 100%;
+    height: auto;
 }
 
 .entryTitle {
     border-bottom: 2px solid #bbb;
     margin: 0px;
+    padding-bottom: 0.3em;
+    font-weight: bold;
+    /* 対応ブラウザでは、タイトルを文節の切れ目で折り返し、行の長さをそろえる */
+    word-break: auto-phrase;
+    text-wrap: balance;
 }
 
 .entryTime {
     text-align: right;
     font-size: 0.8em;
     font-family: "Trebuchet MS", sans-serif;
+    margin-bottom: 1.5em;
+    letter-spacing: 0;
+}
+
+/* スマホ幅: 左右の余白を詰めて1行20字前後を確保し、行間は少しだけ狭める */
+@media (max-width: 767px) {
+    article {
+        padding: 16px 14px;
+        line-height: 1.7;
+    }
+
+    .entryTitle {
+        font-size: 20px;
+    }
+
+    article h4 {
+        font-size: 18px;
+    }
+
+    article h5 {
+        font-size: 16px;
+    }
+
+    article ul,
+    article ol {
+        padding-left: 1.5em;
+    }
 }
 
 aside {
@@ -76,6 +168,13 @@ fieldset {
     font-size: 0.9em;
 }
 
+/* 16px 未満の入力欄は iOS Safari でフォーカス時に画面が拡大されるため */
+.commentForm input,
+.commentForm textarea,
+.commentForm select {
+    font-size: 16px;
+}
+
 .commentTime {
     font-family: "Trebuchet MS", sans-serif;
     font-size: 0.9em;
@@ -113,8 +212,19 @@ fieldset {
 .navibox {
     border: 2px solid #bbb;
     background-color: #fff;
-    //width: 95%;
     margin-bottom: 20px;
+    /* サイドバーは補助情報なので本文より一段小さくする */
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.navibox ul {
+    padding-right: 8px;
+    padding-left: 1.8em;
+}
+
+.navibox li + li {
+    margin-top: 0.3em;
 }
 
 .navititle {

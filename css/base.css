@@ -285,9 +285,12 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.42857143;
+  /* 欧文は従来どおり Helvetica / Arial、和文は OS ごとの読みやすいゴシック体を明示する */
+  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "BIZ UDPGothic", Meiryo, sans-serif;
+  /* 本文は 16px・行間 1.75（WCAG 2.2 の 1.5 倍以上、JLReq の二分〜全角アキが目安） */
+  font-size: 16px;
+  line-height: 1.75;
+  line-break: strict;
   color: #333;
   background-color: #fff;
 }
@@ -338,7 +341,8 @@ h6,
 .h3 {
   font-family: inherit;
   font-weight: 500;
-  line-height: 1.1;
+  /* 和文の見出しは折り返すと行が重なって見えるので 1.1 から広げる */
+  line-height: 1.4;
   color: inherit;
 }
 h1 small,
@@ -400,7 +404,7 @@ h6 {
   font-size: 12px;
 }
 p {
-  margin: 0 0 10px;
+  margin: 0 0 1em;
 }
 small {
   font-size: 85%;
@@ -415,7 +419,7 @@ mark {
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 }
 ul ul,
 ol ul,
@@ -429,7 +433,7 @@ dl {
 }
 dt,
 dd {
-  line-height: 1.42857143;
+  line-height: inherit;
 }
 dt {
   font-weight: bold;
@@ -444,8 +448,8 @@ abbr[data-original-title] {
 }
 blockquote {
   padding: 10px 20px;
-  margin: 0 0 20px;
-  font-size: 17.5px;
+  margin: 0 0 1em;
+  font-size: 1em;
   border-left: 5px solid #eee;
 }
 blockquote p:last-child,
@@ -472,7 +476,8 @@ address {
 code,
 kbd,
 pre,
-samp {
+samp,
+tt {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 code {
@@ -500,13 +505,15 @@ kbd kbd {
 }
 pre {
   display: block;
-  padding: 9.5px;
-  margin: 0 0 10px;
-  font-size: 13px;
-  line-height: 1.42857143;
+  padding: 12px;
+  margin: 0 0 1em;
+  font-size: 14px;
+  line-height: 1.6;
   color: #333;
-  word-break: break-all;
-  word-wrap: break-word;
+  /* コードは途中で折り返さず、はみ出す分は横スクロールで見せる */
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -515,7 +522,7 @@ pre code {
   padding: 0;
   font-size: inherit;
   color: inherit;
-  white-space: pre-wrap;
+  white-space: pre;
   background-color: transparent;
   border-radius: 0;
 }
