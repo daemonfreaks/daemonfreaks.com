@@ -40,6 +40,8 @@ MAX_ITEMS = 10
 MAX_PER_SOURCE = 5
 
 TIMEOUT_SECONDS = 20
+# フィード 1 つの応答の上限。これを超えたら取得失敗として扱う。
+MAX_FEED_BYTES = 2 * 1024 * 1024
 USER_AGENT = "daemonfreaks.com-activities/1.0"
 ITEM_KEYS = ("source", "source_url", "title", "url", "published")
 
@@ -154,7 +156,10 @@ def parse_feed(data):
 def fetch_url(url):
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
-        return response.read()
+        data = response.read(MAX_FEED_BYTES + 1)
+    if len(data) > MAX_FEED_BYTES:
+        raise ValueError("応答が大きすぎる（%d バイトを超えた）" % MAX_FEED_BYTES)
+    return data
 
 
 def load_previous(path):

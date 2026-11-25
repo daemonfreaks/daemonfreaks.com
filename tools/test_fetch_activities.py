@@ -14,6 +14,7 @@ from unittest import mock
 
 import fetch_activities
 from fetch_activities import (
+    MAX_FEED_BYTES,
     MAX_ITEMS,
     MAX_PER_SOURCE,
     collect,
@@ -385,6 +386,45 @@ class CollectTest(unittest.TestCase):
             "https://b.example/feed": urllib.error.URLError("x"),
         })
         (items, failed), _ = quiet(collect, FEEDS, PREVIOUS, fetch)
+        self.assertEqual(titles(items), ["old-b", "old-a"])
+        self.assertEqual(failed, ["A", "B"])
+
+
+class FakeResponse(io.BytesIO):
+    """urlopen の戻り値の代わり。with で使えて read(n) に応える。"""
+
+
+class FetchUrlTest(unittest.TestCase):
+    def fetch(self, body):
+        with mock.patch.object(
+            fetch_activities.urllib.request, "urlopen",
+            return_value=FakeResponse(body),
+        ) as urlopen:
+            result = fetch_activities.fetch_url("https://example.com/feed")
+        request = urlopen.call_args[0][0]
+        self.assertEqual(request.get_header("User-agent"), fetch_activities.USER_AGENT)
+        self.assertEqual(
+            urlopen.call_args[1]["timeout"], fetch_activities.TIMEOUT_SECONDS)
+        return result
+
+    def test_returns_body(self):
+        self.assertEqual(self.fetch(b"<rss/>"), b"<rss/>")
+
+    def test_body_at_limit_is_accepted(self):
+        body = b"x" * MAX_FEED_BYTES
+        self.assertEqual(self.fetch(body), body)
+
+    def test_body_over_limit_is_error(self):
+        with self.assertRaises(ValueError):
+            self.fetch(b"x" * (MAX_FEED_BYTES + 1))
+
+    def test_oversized_feed_keeps_previous(self):
+        with mock.patch.object(
+            fetch_activities.urllib.request, "urlopen",
+            side_effect=lambda *a, **k: FakeResponse(b"x" * (MAX_FEED_BYTES + 1)),
+        ):
+            (items, failed), stderr = quiet(
+                collect, FEEDS, PREVIOUS, fetch_activities.fetch_url)
         self.assertEqual(titles(items), ["old-b", "old-a"])
         self.assertEqual(failed, ["A", "B"])
 
