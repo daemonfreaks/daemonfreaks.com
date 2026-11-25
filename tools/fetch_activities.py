@@ -5,6 +5,7 @@
 
 cron で定期的に動かす。標準ライブラリだけで動く（Python 3.8 以上）。
 """
+import html
 import json
 import os
 import re
@@ -86,6 +87,15 @@ def _text(element, *names):
     return ""
 
 
+def _atom_title(entry):
+    """Atom のタイトル。type="html" のときはタグを除き、実体参照を文字に直す。"""
+    text = _text(entry, "title")
+    titles = _children(entry, "title")
+    if titles and titles[0].get("type") == "html":
+        text = html.unescape(re.sub(r"<[^>]*>", "", text))
+    return text
+
+
 def _atom_link(entry):
     for link in _children(entry, "link"):
         if link.get("rel", "alternate") == "alternate" and link.get("href"):
@@ -118,13 +128,15 @@ def parse_feed(data):
 
     items = []
     for entry in entries:
-        title = " ".join(_text(entry, "title").split())
         if is_atom:
+            title = _atom_title(entry)
             url = _atom_link(entry)
             published = parse_date(_text(entry, "published", "updated"))
         else:
+            title = _text(entry, "title")
             url = _text(entry, "link")
             published = parse_date(_text(entry, "pubDate", "date"))
+        title = " ".join(title.split())
         if not title or published is None:
             continue
         if not re.match(r"https?://", url):

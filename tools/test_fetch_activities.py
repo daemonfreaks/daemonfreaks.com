@@ -165,6 +165,27 @@ class ParseFeedTest(unittest.TestCase):
             },
         )
 
+    def test_atom_html_title_is_decoded_to_text(self):
+        # GitHub のタイトルは type="html"。実体参照とタグを文字に直す。
+        data = (
+            '<feed xmlns="http://www.w3.org/2005/Atom"><entry>'
+            '<title type="html">Q&amp;amp;A &lt;b&gt;bold&lt;/b&gt; 1 &amp;lt; 2</title>'
+            '<link href="https://example.com/1"/>'
+            "<updated>2026-11-20T12:00:00Z</updated>"
+            "</entry></feed>"
+        ).encode("utf-8")
+        self.assertEqual(parse_feed(data)[0]["title"], "Q&A bold 1 < 2")
+
+    def test_atom_text_title_is_kept_as_is(self):
+        data = (
+            '<feed xmlns="http://www.w3.org/2005/Atom"><entry>'
+            "<title>a &amp; &lt;b&gt;</title>"
+            '<link href="https://example.com/1"/>'
+            "<updated>2026-11-20T12:00:00Z</updated>"
+            "</entry></feed>"
+        ).encode("utf-8")
+        self.assertEqual(parse_feed(data)[0]["title"], "a & <b>")
+
     def test_rss1(self):
         self.assertEqual(
             parse_feed(RSS1),
